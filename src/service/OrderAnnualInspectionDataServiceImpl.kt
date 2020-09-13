@@ -1,4 +1,4 @@
-package com.botpy.vosp.client.service.impl
+package com.alvin.service
 
 import com.alvin.dao.OrderAnnualInspectionDataDao
 import entity.OrderAnnualInspectionData
@@ -12,7 +12,7 @@ import entity.OrderAnnualInspectionData
  */
 open class OrderAnnualInspectionDataServiceImpl {
 
-    fun listByOrderId(orderId: Long): List<OrderAnnualInspectionData> {
+    fun listByOrderId(orderId: String): List<OrderAnnualInspectionData> {
         return OrderAnnualInspectionDataDao().listByOrderId(orderId)
     }
 }

@@ -1,16 +1,14 @@
-package com.botpy.vosp.client.controller
+package com.alvin.web
 
 import cn.hutool.core.collection.CollectionUtil
 import cn.hutool.core.util.NumberUtil
 import cn.hutool.json.JSONUtil
 import com.alvin.entity.*
-import com.botpy.vosp.client.service.impl.OrderAnnualInspectionDataServiceImpl
+import com.alvin.service.OrderAnnualInspectionDataServiceImpl
 import com.botpy.vosp.common.constants.CommonConstant
-import com.botpy.vosp.common.gateway.constants.CxyConstant
 import com.botpy.vosp.common.gateway.enums.CxyEnum
 import com.botpy.vosp.common.util.CxyUtils
 import org.apache.commons.lang3.RandomStringUtils
-import org.springframework.web.bind.annotation.PostMapping
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -18,19 +16,18 @@ import kotlin.random.Random
 
 /**
  * 订单主表
- * 年检流程图(https://confluence.botpy.com/pages/viewpage.action?pageId=13991957)
  *
  * @author yahui
  * @date 2020-07-07 14:54:46
  */
+const val PASS:String="pass"
 open class CxyController {
 
-    lateinit var orderAnnualInspectionDataService: OrderAnnualInspectionDataServiceImpl
 
-    @PostMapping(CxyConstant.GET_CHECK_LIST)
+
     fun checkDateList(cxyReq: CxyReq): String {
         val content = cxyReq.content
-        val decrypt = CxyUtils.decryptByPassword("3B986530AA1F481097969BEDCA072ADC", content)
+        val decrypt = CxyUtils.decryptByPassword(PASS, content)
         val cxyGetCheckListReq = JSONUtil.toBean(decrypt, CxyGetCheckListReq::class.java)
         val list: MutableList<Map<*, *>> = mutableListOf()
         val map: MutableMap<String, Any> = mutableMapOf()
@@ -50,7 +47,7 @@ open class CxyController {
         val mapMap = getIntegerMapMap(map, localDate, map1, localDate1, map2, localDate2)
         mapMap.forEach { (key: Int?, value: Map<String, Any>) -> list.add(value) }
         return CxyUtils.encryptByPassword(
-            "3B986530AA1F481097969BEDCA072ADC",
+            PASS,
             JSONUtil.toJsonStr(CxyResult.success(list))
         )
     }
@@ -105,10 +102,9 @@ open class CxyController {
      *
      * @return 是否可以办理
      */
-    @PostMapping(CxyConstant.CHECK_INFO)
     fun handleStatus(cxyReq: CxyReq): String {
         val content = cxyReq.content
-        val decrypt = CxyUtils.decryptByPassword("3B986530AA1F481097969BEDCA072ADC", content)
+        val decrypt = CxyUtils.decryptByPassword(PASS, content)
         val cxyGetCheckListReq = JSONUtil.toBean(decrypt, CxyCheckInfoReq::class.java)
         val carNumber = cxyGetCheckListReq.carNumber
         val cha = carNumber[carNumber.length - 1].toString() + ""
@@ -143,7 +139,7 @@ open class CxyController {
         list.add(transactType)
         cxyCheckInfoResp.transactTypeList = list
         return CxyUtils.encryptByPassword(
-            "3B986530AA1F481097969BEDCA072ADC",
+            PASS,
             JSONUtil.toJsonStr(CxyResult.success(cxyCheckInfoResp))
         )
     }
@@ -158,14 +154,13 @@ open class CxyController {
      *
      * @return 是否可以办理
      */
-    @PostMapping(CxyConstant.PAY)
     fun goodsAndCouponMoney(cxyReq: CxyReq?): String {
         val random = Random(2).nextInt(0, 20)
         val cxyPayResp = CxyPayResp()
         cxyPayResp.orderId = RandomStringUtils.random(10, true, false)
         if (random / 2 == 0) {
             return CxyUtils.encryptByPassword(
-                "3B986530AA1F481097969BEDCA072ADC",
+                PASS,
                 JSONUtil.toJsonStr(CxyResult.success(cxyPayResp))
             )
         } else {
@@ -185,10 +180,9 @@ open class CxyController {
      *
      * @return 是否可以办理
      */
-    @PostMapping(CxyConstant.GET_ORDER)
     fun getOrder(cxyReq: CxyReq): String {
         val content = cxyReq.content
-        val decrypt = CxyUtils.decryptByPassword("3B986530AA1F481097969BEDCA072ADC", content)
+        val decrypt = CxyUtils.decryptByPassword(PASS, content)
         val cxyGetCheckListReq = JSONUtil.toBean(decrypt, CxyGetOrderReq::class.java)
         val cxyGetOrderResp = CxyGetOrderResp()
         val exOrderId = cxyGetCheckListReq.exOrderId
@@ -238,7 +232,7 @@ open class CxyController {
         }
         cxyGetOrderResp.updateTime = LocalDateTime.now()
         return CxyUtils.encryptByPassword(
-            "3B986530AA1F481097969BEDCA072ADC",
+            PASS,
             JSONUtil.toJsonStr(CxyResult.success(cxyGetOrderResp))
         )
     }
@@ -251,10 +245,9 @@ open class CxyController {
      *
      * @return 是否成功
      */
-    @PostMapping(CxyConstant.UPDATE_ORDER_REQUIREMENT)
     fun updateOrderRequirement(cxyReq: CxyReq?): String {
         return CxyUtils.encryptByPassword(
-            "3B986530AA1F481097969BEDCA072ADC",
+            PASS,
             JSONUtil.toJsonStr(CxyResult.successAndTrue())
         )
     }
@@ -267,10 +260,9 @@ open class CxyController {
      *
      * @return 是否可以办理
      */
-    @PostMapping(CxyConstant.UPDATE_ORDER_REQUIREMENT_STATUS)
     fun updateOrderRequirementStatus(cxyReq: CxyReq?): String {
         return CxyUtils.encryptByPassword(
-            "3B986530AA1F481097969BEDCA072ADC",
+            PASS,
             JSONUtil.toJsonStr(CxyResult.successAndTrue())
         )
     }
@@ -283,10 +275,9 @@ open class CxyController {
      *
      * @return 是否可以办理
      */
-    @PostMapping(CxyConstant.UPDATE_ORDER_CONFIRM_STATUS)
     fun updateOrderConfirmStatus(cxyReq: CxyReq?): String {
         return CxyUtils.encryptByPassword(
-            "3B986530AA1F481097969BEDCA072ADC",
+            PASS,
             JSONUtil.toJsonStr(CxyResult.successAndTrue())
         )
     }
