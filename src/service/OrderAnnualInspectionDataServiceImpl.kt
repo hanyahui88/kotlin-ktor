@@ -1,7 +1,7 @@
 package com.alvin.service
 
 import com.alvin.dao.OrderAnnualInspectionDataDao
-import entity.OrderAnnualInspectionData
+import com.alvin.entity.OrderAnnualInspectionData
 
 
 /**

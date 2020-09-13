@@ -1,0 +1,8 @@
+{
+  "Type": "Mysql",
+  "OutPutFolder": "/Users/alvin/IdeaProjects/myself/kotlin-ktor",
+  "IsKotlin": true,
+  "NamespaceName": "com.alvin",
+  "ConnectionString": "Server=localhost;Port=3306;Database=vosp;Uid=root;Pwd=root;charset=utf8mb4;SslMode=none",
+  "TableFilter": ["order","order_annual_inspection_data"]
+}
