@@ -18,6 +18,7 @@ application {
 }
 
 repositories {
+    maven { url = uri("https://nxrm.botpy.com/repository/maven-public/") }
     mavenLocal()
     jcenter()
     maven { url = uri("https://kotlin.bintray.com/ktor") }
@@ -27,13 +28,16 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     implementation("me.liuwj.ktorm:ktorm-core:3.0.0")
     implementation("cn.hutool:hutool-core:5.3.7")
-    implementation("com.botpy.vosp:vosp-common:1.0-SNAPSHOT")
+    implementation("com.botpy.vosp:vosp-common:0.2.0-SNAPSHOT")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-webjars:$ktor_version")
     implementation("org.webjars:jquery:3.2.1")
     implementation("io.ktor:ktor-jackson:$ktor_version")
+    implementation("org.apache.commons:commons-compress:1.20")
+    implementation("com.github.junrar:junrar:7.4.0")
+    implementation("org.tukaani:xz:1.8")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }
 
